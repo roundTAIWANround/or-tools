@@ -1,0 +1,12 @@
+FROM ruby:2.6.0-alpine3.8
+
+RUN set -x && apk add --no-cache python3 cmake tzdata
+
+RUN echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
+  apk add --no-cache --virtual .build-deps git build-base autoconf libtool zlib-dev automake linux-headers swig \
+	python3-dev py3-virtualenv  && \
+  python3 -m pip install wheel && \
+  git clone https://github.com/google/or-tools.git && \
+  cd or-tools && make third_party && make install_cc && \
+  cd ../ && rm -rf or-tools && \
+  apk del .build-deps
