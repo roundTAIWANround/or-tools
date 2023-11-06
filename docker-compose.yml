@@ -1,0 +1,14 @@
+version: '3'
+services:
+  or-tools: &or-tools
+    build: './'
+    ports:
+      - '3003:3003'
+    environment:
+      TZ: -08:00
+  or-tools-base: &or-tools-base
+    image: roundtaiwanround/or-tools:latest
+    ports:
+      - '3003:3003'
+    environment:
+      TZ: -08:00
